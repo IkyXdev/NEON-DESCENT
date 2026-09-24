@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Dodge</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <button id="leaderboardBtn">👑</button>
+
+
+    <!-- =========================
+         LEADERBOARD
+    ========================== -->
+
+    <div id="leaderboard">
+
+        <h2>🏆 TOP 5</h2>
+
+        <div id="leaderboardList"></div>
+
+        <button id="closeLeaderboard">
+            ✕ KEMBALI
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         NAME MENU
+    ========================== -->
+
+    <div id="nameMenu">
+
+        <h2>👤 NAMA PEMAIN</h2>
+
+        <input
+            type="text"
+            id="nameInput"
+            maxlength="20"
+            placeholder="Masukkan nama"
+        >
+
+        <button id="saveNameBtn">
+            💾 SIMPAN
+        </button>
+
+        <button id="closeName">
+            ✕ KEMBALI
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         THEME MENU
+    ========================== -->
+
+    <div id="themeMenu">
+
+        <h2>SELECT THEME</h2>
+
+        <button class="themeBtn" data-theme="neon">
+            ⚡ NEON
+        </button>
+
+        <button class="themeBtn" data-theme="hell">
+            😈 HELL
+        </button>
+
+        <button id="closeTheme">
+            ✕ KEMBALI
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN MENU
+    ========================== -->
+
+    <div id="menu">
+
+        <h1>CYBER DODGE</h1>
+
+        <div id="playerNameDisplay">
+            👤 Rizki
+        </div>
+
+        <button id="nameBtn">
+            ✏️ GANTI NAMA
+        </button>
+
+
+        <div id="difficulty">
+
+            <button
+                class="difficultyBtn"
+                data-level="easy">
+                EASY
+            </button>
+
+            <button
+                class="difficultyBtn"
+                data-level="normal">
+                NORMAL
+            </button>
+
+            <button
+                class="difficultyBtn"
+                data-level="hard">
+                HARD
+            </button>
+
+        </div>
+
+
+        <button id="playBtn">
+            PLAY
+        </button>
+
+        <button id="themeBtn">
+            THEMES
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         GAME
+    ========================== -->
+
+    <div id="gameContainer">
+
+        <div id="score">
+            Score: 0
+        </div>
+
+        <div id="lives">
+            Lives: 3
+        </div>
+
+        <div id="highScore">
+            High Score: 0
+        </div>
+
+        <div id="time">
+            Time: 0.0s
+        </div>
+
+
+        <div id="game">
+
+            <button id="pauseBtn">
+                Ⅱ
+            </button>
+
+            <div id="pauseOverlay">
+                PAUSED
+            </div>
+
+            <div id="player"></div>
+
+        </div>
+
+
+        <div id="controls">
+
+            <button id="leftBtn">
+                ◀
+            </button>
+
+            <button id="rightBtn">
+                ▶
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             PAUSE MENU
+        ========================== -->
+
+        <div id="pauseMenu">
+
+            <h2>PAUSED</h2>
+
+            <button id="resumeBtn">
+                ▶ LANJUT
+            </button>
+
+            <button id="pauseRetryBtn">
+                🔄 ULANG
+            </button>
+
+            <button id="pauseMenuBtn">
+                🏠 MENU
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         GAME OVER
+    ========================== -->
+
+    <div id="gameOverScreen">
+
+        <h1>GAME OVER</h1>
+
+        <div id="finalScore">
+            Score: 0
+        </div>
+
+        <div id="finalHighScore">
+            High Score: 0
+        </div>
+
+        <div id="finalTime">
+            Survival Time: 0.0s
+        </div>
+
+        <div id="finalBestTime">
+            Best Time: 0.0s
+        </div>
+
+        <button id="retryBtn">
+            RETRY
+        </button>
+
+        <button id="menuBtn">
+            MENU
+        </button>
+
+    </div>
+
+
+    <script src="/static/game.js"></script>
+
+</body>
+
+      </html>
