@@ -83,6 +83,9 @@ function openNameMenu() {
     leaderboard.style.display =
         "none";
 
+    myLeaderboard.style.display =
+        "none";
+
     themeMenu.style.display =
         "none";
 
@@ -169,7 +172,7 @@ nameInput.addEventListener(
 
 
 /* =========================
-   LEADERBOARD
+   PUBLIC LEADERBOARD
 ========================= */
 
 const leaderboardBtn =
@@ -183,6 +186,268 @@ const leaderboardList =
 
 const closeLeaderboard =
     document.getElementById("closeLeaderboard");
+
+
+/* =========================
+   MY LEADERBOARD
+========================= */
+
+const myLeaderboardBtn =
+    document.getElementById(
+        "myLeaderboardBtn"
+    );
+
+const myLeaderboard =
+    document.getElementById(
+        "myLeaderboard"
+    );
+
+const myLeaderboardList =
+    document.getElementById(
+        "myLeaderboardList"
+    );
+
+const closeMyLeaderboard =
+    document.getElementById(
+        "closeMyLeaderboard"
+    );
+
+
+/* =========================
+   MY SCORES STORAGE
+========================= */
+
+let myScores = [];
+
+try {
+
+    const savedScores =
+        JSON.parse(
+            localStorage.getItem(
+                "myScores"
+            )
+        );
+
+    if (Array.isArray(savedScores)) {
+
+        myScores =
+            savedScores
+                .map(function(item) {
+
+                    return {
+                        name:
+                            String(
+                                item.name ||
+                                playerName
+                            ),
+
+                        score:
+                            Number(
+                                item.score
+                            ),
+
+                        time:
+                            Number(
+                                item.time
+                            ) || 0
+                    };
+
+                })
+                .filter(function(item) {
+
+                    return Number.isFinite(
+                        item.score
+                    );
+
+                })
+                .sort(function(a, b) {
+
+                    return b.score -
+                        a.score;
+
+                })
+                .slice(0, 10);
+    }
+
+} catch (error) {
+
+    myScores = [];
+}
+
+
+function saveMyScores() {
+
+    localStorage.setItem(
+        "myScores",
+        JSON.stringify(myScores)
+    );
+}
+
+
+function addMyScore(
+    scoreValue,
+    timeValue
+) {
+
+    const newScore = {
+
+        name:
+            playerName,
+
+        score:
+            Number(scoreValue) || 0,
+
+        time:
+            Number(timeValue) || 0
+    };
+
+
+    myScores.push(
+        newScore
+    );
+
+
+    myScores.sort(
+        function(a, b) {
+
+            return b.score -
+                a.score;
+        }
+    );
+
+
+    myScores =
+        myScores.slice(0, 10);
+
+
+    saveMyScores();
+}
+
+
+function updateMyLeaderboard() {
+
+    myLeaderboardList.innerHTML =
+        "";
+
+
+    if (
+        myScores.length === 0
+    ) {
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "leaderboardRow";
+
+        empty.textContent =
+            "Belum ada skor pribadi.";
+
+        myLeaderboardList.appendChild(
+            empty
+        );
+
+        return;
+    }
+
+
+    myScores.forEach(
+        function(item, index) {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "leaderboardRow";
+
+
+            const rank =
+                document.createElement(
+                    "span"
+                );
+
+
+            const scoreElement =
+                document.createElement(
+                    "span"
+                );
+
+
+            rank.textContent =
+                (index + 1) + ".";
+
+
+            scoreElement.textContent =
+                String(
+                    item.name
+                ) +
+                " — " +
+                String(
+                    item.score
+                ) +
+                " pts";
+
+
+            row.appendChild(
+                rank
+            );
+
+            row.appendChild(
+                scoreElement
+            );
+
+
+            myLeaderboardList.appendChild(
+                row
+            );
+        }
+    );
+}
+
+
+/* =========================
+   MY LEADERBOARD BUTTON
+========================= */
+
+myLeaderboardBtn.addEventListener(
+    "click",
+    function() {
+
+        if (gameStarted) {
+            return;
+        }
+
+
+        updateMyLeaderboard();
+
+
+        myLeaderboard.style.display =
+            "block";
+
+        leaderboard.style.display =
+            "none";
+
+        themeMenu.style.display =
+            "none";
+
+        nameMenu.style.display =
+            "none";
+    }
+);
+
+
+closeMyLeaderboard.addEventListener(
+    "click",
+    function() {
+
+        myLeaderboard.style.display =
+            "none";
+    }
+);
 
 
 /* =========================
@@ -240,6 +505,9 @@ themeBtn.addEventListener(
             "block";
 
         leaderboard.style.display =
+            "none";
+
+        myLeaderboard.style.display =
             "none";
 
         nameMenu.style.display =
@@ -828,6 +1096,9 @@ leaderboardBtn.addEventListener(
         leaderboard.style.display =
             "block";
 
+        myLeaderboard.style.display =
+            "none";
+
         themeMenu.style.display =
             "none";
 
@@ -922,6 +1193,9 @@ function startGame() {
     leaderboard.style.display =
         "none";
 
+    myLeaderboard.style.display =
+        "none";
+
     themeMenu.style.display =
         "none";
 
@@ -978,6 +1252,9 @@ function startGame() {
         "block";
 
     leaderboardBtn.style.display =
+        "none";
+
+    myLeaderboardBtn.style.display =
         "none";
 
     pauseBtn.style.display =
@@ -1185,6 +1462,9 @@ function goToMenu() {
         "flex";
 
     leaderboardBtn.style.display =
+        "block";
+
+    myLeaderboardBtn.style.display =
         "block";
 
 
@@ -1642,6 +1922,14 @@ function endGame() {
     }
 
 
+    /* SIMPAN KE MY SCORES */
+
+    addMyScore(
+        score,
+        survivalTime
+    );
+
+
     /* HAPUS ENEMY */
 
     document
@@ -1653,9 +1941,7 @@ function endGame() {
         );
 
 
-    /* =========================
-       KIRIM SCORE KE SERVER
-    ========================= */
+    /* KIRIM SCORE KE PUBLIC LEADERBOARD */
 
     submitScoreToServer(
         score
@@ -1703,6 +1989,9 @@ function endGame() {
         "flex";
 
     leaderboardBtn.style.display =
+        "block";
+
+    myLeaderboardBtn.style.display =
         "block";
 
 
@@ -2029,6 +2318,9 @@ highScoreText.textContent =
 leaderboardBtn.style.display =
     "block";
 
+myLeaderboardBtn.style.display =
+    "block";
+
 gameContainer.style.display =
     "none";
 
@@ -2047,10 +2339,18 @@ pauseMenu.style.display =
 nameMenu.style.display =
     "none";
 
+myLeaderboard.style.display =
+    "none";
 
-/* LOAD LEADERBOARD DARI FLASK */
+
+/* LOAD PUBLIC LEADERBOARD */
 
 loadLeaderboardFromServer();
+
+
+/* LOAD MY SCORES */
+
+updateMyLeaderboard();
 
 
 /* START PLAYER LOOP */
