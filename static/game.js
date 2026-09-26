@@ -62,7 +62,7 @@ const playerNameDisplay =
 
 
 let playerName =
-    localStorage.getItem("playerName") || "Rizki";
+    localStorage.getItem("playerName") || "Player";
 
 
 function updatePlayerNameDisplay() {
@@ -104,7 +104,7 @@ function savePlayerName() {
         nameInput.value.trim();
 
     if (!newName) {
-        newName = "Rizki";
+        newName = "Player";
     }
 
     newName =
@@ -640,6 +640,56 @@ let highScore =
 
 let leaderboardData = [];
 
+let currentSeason = null;
+
+let currentResetAt = null;
+
+
+/* =========================
+   RESET DATE FORMAT
+========================= */
+
+function formatResetDate(
+    isoDate
+) {
+
+    if (!isoDate) {
+        return "";
+    }
+
+    try {
+
+        const date =
+            new Date(isoDate);
+
+        if (Number.isNaN(
+            date.getTime()
+        )) {
+            return "";
+        }
+
+        return new Intl.DateTimeFormat(
+            "id-ID",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                timeZone: "Asia/Jakarta"
+            }
+        ).format(date) + " WIB";
+
+    } catch (error) {
+
+        return "";
+    }
+}
+
+
+/* =========================
+   ONLINE LEADERBOARD
+========================= */
 
 async function loadLeaderboardFromServer() {
 
@@ -661,7 +711,66 @@ async function loadLeaderboardFromServer() {
             await response.json();
 
 
-        if (Array.isArray(data)) {
+        if (
+            data &&
+            !Array.isArray(data)
+        ) {
+
+            currentSeason =
+                Number(data.season) || null;
+
+            currentResetAt =
+                data.reset_at || null;
+
+
+            if (
+                Array.isArray(
+                    data.scores
+                )
+            ) {
+
+                leaderboardData =
+                    data.scores
+                        .map(function(item) {
+
+                            return {
+                                name:
+                                    String(
+                                        item.name ||
+                                        "Player"
+                                    ),
+
+                                score:
+                                    Number(
+                                        item.score
+                                    )
+                            };
+
+                        })
+                        .filter(function(item) {
+
+                            return Number.isFinite(
+                                item.score
+                            );
+
+                        })
+                        .sort(function(a, b) {
+
+                            return b.score -
+                                a.score;
+
+                        })
+                        .slice(0, 100);
+            }
+
+        } else if (
+            Array.isArray(data)
+        ) {
+
+            /* COMPATIBILITY DENGAN API LAMA */
+
+            currentSeason = null;
+            currentResetAt = null;
 
             leaderboardData =
                 data
@@ -671,7 +780,7 @@ async function loadLeaderboardFromServer() {
                             name:
                                 String(
                                     item.name ||
-                                    "Rizki"
+                                    "Player"
                                 ),
 
                             score:
@@ -694,7 +803,7 @@ async function loadLeaderboardFromServer() {
                             a.score;
 
                     })
-                    .slice(0, 5);
+                    .slice(0, 100);
         }
 
 
@@ -707,6 +816,9 @@ async function loadLeaderboardFromServer() {
         );
 
         leaderboardData = [];
+
+        currentSeason = null;
+        currentResetAt = null;
 
         updateLeaderboard();
     }
@@ -760,7 +872,66 @@ async function submitScoreToServer(
             await response.json();
 
 
-        if (Array.isArray(data)) {
+        if (
+            data &&
+            !Array.isArray(data)
+        ) {
+
+            currentSeason =
+                Number(data.season) || null;
+
+            currentResetAt =
+                data.reset_at || null;
+
+
+            if (
+                Array.isArray(
+                    data.scores
+                )
+            ) {
+
+                leaderboardData =
+                    data.scores
+                        .map(function(item) {
+
+                            return {
+                                name:
+                                    String(
+                                        item.name ||
+                                        "Player"
+                                    ),
+
+                                score:
+                                    Number(
+                                        item.score
+                                    )
+                            };
+
+                        })
+                        .filter(function(item) {
+
+                            return Number.isFinite(
+                                item.score
+                            );
+
+                        })
+                        .sort(function(a, b) {
+
+                            return b.score -
+                                a.score;
+
+                        })
+                        .slice(0, 100);
+            }
+
+        } else if (
+            Array.isArray(data)
+        ) {
+
+            /* COMPATIBILITY DENGAN API LAMA */
+
+            currentSeason = null;
+            currentResetAt = null;
 
             leaderboardData =
                 data
@@ -770,7 +941,7 @@ async function submitScoreToServer(
                             name:
                                 String(
                                     item.name ||
-                                    "Rizki"
+                                    "Player"
                                 ),
 
                             score:
@@ -793,7 +964,7 @@ async function submitScoreToServer(
                             a.score;
 
                     })
-                    .slice(0, 5);
+                    .slice(0, 100);
         }
 
 
@@ -1001,6 +1172,78 @@ function stopTimer() {
 function updateLeaderboard() {
 
     leaderboardList.innerHTML = "";
+
+
+    /* =========================
+       SEASON HEADER
+    ========================= */
+
+    if (currentSeason) {
+
+        const seasonHeader =
+            document.createElement(
+                "div"
+            );
+
+        seasonHeader.className =
+            "leaderboardSeason";
+
+
+        const seasonTitle =
+            document.createElement(
+                "div"
+            );
+
+        seasonTitle.textContent =
+            "🌐 PUBLIC";
+
+
+        const seasonNumber =
+            document.createElement(
+                "div"
+            );
+
+        seasonNumber.textContent =
+            "SEASON " +
+            currentSeason;
+
+
+        seasonHeader.appendChild(
+            seasonTitle
+        );
+
+        seasonHeader.appendChild(
+            seasonNumber
+        );
+
+
+        if (currentResetAt) {
+
+            const resetText =
+                document.createElement(
+                    "div"
+                );
+
+            resetText.textContent =
+                "Reset: " +
+                formatResetDate(
+                    currentResetAt
+                );
+
+            resetText.className =
+                "leaderboardReset";
+
+            seasonHeader.appendChild(
+                resetText
+            );
+        }
+
+
+        leaderboardList.appendChild(
+            seasonHeader
+        );
+    }
+
 
     if (
         leaderboardData.length === 0
