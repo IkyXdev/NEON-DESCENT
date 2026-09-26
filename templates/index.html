@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="/static/style.css">
 
     <style>
+        /* =========================
+           LEADERBOARD BUTTONS
+        ========================== */
+
         #leaderboardButtons {
             position: fixed;
             top: 18px;
@@ -19,16 +23,26 @@
 
         #leaderboardBtn,
         #myLeaderboardBtn {
+            position: static !important;
             width: 58px;
             height: 58px;
             border: 2px solid #00eaff;
-            border-radius: 12px;
-            background: rgba(5, 15, 30, 0.9);
+            border-radius: 14px;
+            background: rgba(8, 12, 25, 0.95);
             color: white;
             font-size: 27px;
             cursor: pointer;
-            box-shadow: 0 0 12px #00eaff;
+            box-shadow: 0 0 10px #00eaff;
         }
+
+        #myLeaderboardBtn {
+            border-color: #ff00ff;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        /* =========================
+           MY LEADERBOARD
+        ========================== */
 
         #myLeaderboard {
             display: none;
@@ -36,35 +50,35 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 300px;
+            width: 290px;
             max-width: 85%;
             padding: 25px;
             background: rgba(8, 12, 25, 0.98);
-            border: 2px solid #00eaff;
+            border: 2px solid #ff00ff;
             border-radius: 18px;
             box-shadow:
-                0 0 15px #00eaff,
-                0 0 40px rgba(0, 234, 255, 0.35);
-            z-index: 650;
+                0 0 15px #ff00ff,
+                0 0 40px rgba(255, 0, 255, 0.35);
+            z-index: 800;
+            color: white;
+            text-align: center;
         }
 
         #myLeaderboard h2 {
             margin-top: 0;
-            color: #00eaff;
-            text-align: center;
+            color: #ff00ff;
         }
 
         #myLeaderboardList {
-            margin-top: 15px;
-            color: white;
+            margin: 15px 0;
             text-align: left;
-            line-height: 1.8;
+            max-height: 300px;
+            overflow-y: auto;
         }
 
         #closeMyLeaderboard {
             width: 100%;
             height: 45px;
-            margin-top: 18px;
             border: none;
             border-radius: 10px;
             background: #333;
@@ -92,22 +106,24 @@
 
 <body>
 
-    <!-- LEADERBOARD BUTTONS -->
+    <!-- =========================
+         LEADERBOARD BUTTONS
+    ========================== -->
 
     <div id="leaderboardButtons">
 
-        <button id="leaderboardBtn">
-            🌐
-        </button>
+        <!-- PUBLIC / GLOBAL -->
+        <button id="leaderboardBtn">🌐</button>
 
-        <button id="myLeaderboardBtn">
-            👤
-        </button>
+        <!-- MY SCORES / PRIVATE -->
+        <button id="myLeaderboardBtn">👤</button>
 
     </div>
 
 
-    <!-- PUBLIC LEADERBOARD -->
+    <!-- =========================
+         PUBLIC LEADERBOARD
+    ========================== -->
 
     <div id="leaderboard">
 
@@ -122,7 +138,9 @@
     </div>
 
 
-    <!-- MY PRIVATE LEADERBOARD -->
+    <!-- =========================
+         MY LEADERBOARD
+    ========================== -->
 
     <div id="myLeaderboard">
 
@@ -137,7 +155,9 @@
     </div>
 
 
-    <!-- NAME MENU -->
+    <!-- =========================
+         NAME MENU
+    ========================== -->
 
     <div id="nameMenu">
 
@@ -161,7 +181,9 @@
     </div>
 
 
-    <!-- THEME MENU -->
+    <!-- =========================
+         THEME MENU
+    ========================== -->
 
     <div id="themeMenu">
 
@@ -182,7 +204,9 @@
     </div>
 
 
-    <!-- MAIN MENU -->
+    <!-- =========================
+         MAIN MENU
+    ========================== -->
 
     <div id="menu">
 
@@ -231,7 +255,9 @@
     </div>
 
 
-    <!-- GAME -->
+    <!-- =========================
+         GAME
+    ========================== -->
 
     <div id="gameContainer">
 
@@ -280,7 +306,9 @@
         </div>
 
 
-        <!-- PAUSE MENU -->
+        <!-- =========================
+             PAUSE MENU
+        ========================== -->
 
         <div id="pauseMenu">
 
@@ -303,7 +331,9 @@
     </div>
 
 
-    <!-- GAME OVER -->
+    <!-- =========================
+         GAME OVER
+    ========================== -->
 
     <div id="gameOverScreen">
 
@@ -340,4 +370,4 @@
 
 </body>
 
-            </html>
+    </html>
