@@ -1458,6 +1458,8 @@ function moveEnemy(enemy) {
 
             playHitSound();
 
+            vibrateOnHit();
+
 
             player.classList.add(
                 "playerHit"
@@ -1538,6 +1540,21 @@ function moveEnemy(enemy) {
 
 
     fall();
+}
+
+
+/* =========================
+   VIBRATION
+========================= */
+
+function vibrateOnHit() {
+
+    if (
+        "vibrate" in navigator
+    ) {
+
+        navigator.vibrate(100);
+    }
 }
 
 
