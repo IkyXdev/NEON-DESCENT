@@ -10,20 +10,100 @@
 
 <body>
 
-    <button id="leaderboardBtn">👑</button>
+    <!-- =========================
+         LEADERBOARD BUTTONS
+    ========================== -->
+
+    <div style="
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        display: flex;
+        gap: 8px;
+        z-index: 600;
+    ">
+
+        <!-- PUBLIC LEADERBOARD -->
+        <button id="leaderboardBtn">
+            🌐
+        </button>
+
+        <!-- MY SCORES -->
+        <button id="myLeaderboardBtn" style="
+            width: 45px;
+            height: 45px;
+            border: 1px solid #00eaff;
+            border-radius: 10px;
+            background: rgba(0, 234, 255, 0.08);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        ">
+            👤
+        </button>
+
+    </div>
 
 
     <!-- =========================
-         LEADERBOARD
+         PUBLIC LEADERBOARD
     ========================== -->
 
     <div id="leaderboard">
 
-        <h2>🏆 TOP 5</h2>
+        <h2>🌐 PUBLIC TOP 5</h2>
 
         <div id="leaderboardList"></div>
 
         <button id="closeLeaderboard">
+            ✕ KEMBALI
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         MY LEADERBOARD
+    ========================== -->
+
+    <div id="myLeaderboard" style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 290px;
+        max-width: 85%;
+        padding: 25px;
+        background: rgba(8, 12, 25, 0.98);
+        border: 2px solid #00eaff;
+        border-radius: 18px;
+        box-shadow: 0 0 15px #00eaff, 0 0 40px rgba(0, 234, 255, 0.35);
+        z-index: 650;
+        color: white;
+        text-align: center;
+    ">
+
+        <h2 style="
+            margin-top: 0;
+            color: #00eaff;
+        ">
+            👤 MY SCORES
+        </h2>
+
+        <div id="myLeaderboardList"></div>
+
+        <button id="closeMyLeaderboard" style="
+            width: 100%;
+            height: 48px;
+            margin-top: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        ">
             ✕ KEMBALI
         </button>
 
@@ -245,4 +325,4 @@
 
 </body>
 
-      </html>
+    </html>
